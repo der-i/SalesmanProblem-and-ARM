@@ -1,0 +1,33 @@
+﻿  main.cpp
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(171,31): warning C4244: аргумент: преобразование "__int64" в "const int", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(275,18): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(296,68): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(360,68): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(483,93): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(483,31): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(384,18): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(340,1): message : во время компиляции функции-члена класс шаблон "void graph<std::string>::calcCordEdge(std::vector<sf::RectangleShape,std::allocator<sf::RectangleShape>> &,std::vector<sf::ConvexShape,std::allocator<sf::ConvexShape>> &,const std::vector<sf::CircleShape,std::allocator<sf::CircleShape>> &)"
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(75,17): message : см. первую ссылку на "graph<std::string>::calcCordEdge" в "main"
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(14,16): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "graph<std::string>"
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(385,41): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(416,18): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(417,41): warning C4244: =: преобразование "double" в "float", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(499,15): warning C4101: height: неиспользованная локальная переменная
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(494,1): message : во время компиляции функции-члена класс шаблон "void graph<std::string>::calcCordWeight(std::vector<sf::Text,std::allocator<sf::Text>> &,const std::vector<sf::CircleShape,std::allocator<sf::CircleShape>> &,sf::Text &)"
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(77,19): message : см. первую ссылку на "graph<std::string>::calcCordWeight" в "main"
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(499,8): warning C4101: width: неиспользованная локальная переменная
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(57,14): warning C4244: аргумент: преобразование "__int64" в "const int", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(53,1): message : во время компиляции функции-члена класс шаблон "bool graph<std::string>::BFSHelper(T)"
+          with
+          [
+              T=std::string
+          ]
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(196,5): message : см. первую ссылку на "graph<std::string>::BFSHelper" в "main::<lambda_1>::operator ()"
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(67,14): warning C4244: аргумент: преобразование "__int64" в "const int", возможна потеря данных
+D:\code\informatika\Last_LAB\Graph\Graph\Graph.h(63,1): message : во время компиляции функции-члена класс шаблон "bool graph<std::string>::DFSHelper(T)"
+          with
+          [
+              T=std::string
+          ]
+D:\code\informatika\Last_LAB\Graph\Graph\main.cpp(208,5): message : см. первую ссылку на "graph<std::string>::DFSHelper" в "main::<lambda_1>::operator ()"
+  Graph.vcxproj -> D:\code\informatika\Last_LAB\Graph\x64\Debug\Graph.exe
