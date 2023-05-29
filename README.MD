@@ -33,6 +33,7 @@ gh repo clone der-i/SalesmanProblem-and-ARM
 
 <img src="./img/Arm1.png">
 <img src="./img/Arm2.png">
+<img src="./img/Arm3.png">
 
 ## Исходный код
 
