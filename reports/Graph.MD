@@ -36,6 +36,7 @@ gh repo clone der-i/SalesmanProblem-and-ARM
 Рис. 3 - Визуализация влгоритма дейкстры.
 <img src="./img/Graph4.png">
 Рис. 4 - Диаграмма классов.
+
 ## Исходный код
 
 Исходный код представлен в репозитории: https://github.com/der-i/SalesmanProblem-and-ARM/tree/main/GRAPH
