@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     query = new QSqlQuery(db);
     query->exec("CREATE TABLE Client(Дата TEXT, Время TIME, ФИО TEXT);");   //создание/открытие таблицы
 
-    model = new CustomSqlTableModel(this, db);   //создание модели для вывода в приложение.
+    model = new CustomSqlTableModel(this, db);   //создание кастомной модели для вывода в приложение.
     model->setTable("Client");
     QDate currentDate = QDate::currentDate();
     QString currentDateString = currentDate.toString("dd.MM.yyyy");
@@ -39,14 +39,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tablePerson->setColumnWidth(2, 163);
     this->row = -1;
     ui->calendarWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
-    createGrahpicStart();
+
+    createGrahpicStart();   //создание пустого окна для графика
+    //вывод картинки
     QPixmap pix(":/img/img/img.jpg");
     int w = ui->PixLabel->width();
-    //int h = ui->PixLabel->height();
     ui->PixLabel->setPixmap(pix.scaledToWidth(w));
-    //ui->PixLabel->setPixmap(pix);
-    //ui->PixLabel->setFixedSize(pix.size());
-    // ui->PixLabel->setPixmap(pix.scaledToHeight(h));
 }
 
 MainWindow::~MainWindow()
@@ -54,21 +52,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//взаимодействие с записанными клинентами.
+//открытие окна для записи клиента
 void MainWindow::on_addButton_clicked()
 {
-    // model->insertRow(model->rowCount());
     addPersonDialog windowDialog(this, model);
-   // windowDialog.FillComboBox(QDate::currentDate());
     windowDialog.setModal(true);
     windowDialog.exec();
 }
 
+//установка выбранной строки
 void MainWindow::on_tablePerson_clicked(const QModelIndex &index)
 {
     row = index.row();
 }
-
+//удаление клиента
 void MainWindow::on_deleteButton_clicked()
 {
     if(row == -1)
@@ -83,7 +80,7 @@ void MainWindow::on_deleteButton_clicked()
     }
 }
 
-
+//при смене даты выполняется sql запрос для вывода только нужных записей
 void MainWindow::on_calendarWidget_selectionChanged()
 {
     QDate selectedDate = ui->calendarWidget->selectedDate();
@@ -94,14 +91,12 @@ void MainWindow::on_calendarWidget_selectionChanged()
 
 
 
-
+//отпрака email через сокет
 void MainWindow::on_pushEmail_clicked()
 {
-
-
     QString username = "pstu.ucheba@gmail.com"; // Ваша учетная запись Gmail
-    QString password = "ufvggvdptehdogbj"; // Пароль от вашей учетной записи Gmail
-    QString fromAddress = "pstu.ucheba@gmail.com"; // Ваша учетная запись Gmail
+    QString password = "ufvggvdptehdogbj"; // Пароль от учетной записи Gmail
+    QString fromAddress = "pstu.ucheba@gmail.com"; // учетная запись Gmail
     QString toAddress = ui->textEmailAdress->text(); // Адрес получателя
     QString subject = "Диагноз и лечение"; // Тема письма
     QString body = ui->textEmail->toPlainText(); // Текст письма
@@ -109,14 +104,14 @@ void MainWindow::on_pushEmail_clicked()
     QString from = "Лечащий врач";
     QString to = "Пациент";
     QTcpSocket socket;
-    socket.connectToHost("smtp.gmail.com", 587); // Подключение к серверу по адресу smtp.gmail.com и порту 465 (SSL)
+    socket.connectToHost("smtp.gmail.com", 587); // Подключение к серверу по адресу smtp.gmail.com и порту 587 (SSL)
 
     if (socket.waitForConnected()) {
         // Соединение успешно установлено
         qDebug() << "Connected to SMTP server";
 
 
-        socket.write("HELO localhost\r\n"); // Отправка приветственного сообщения "EHLO localhost" ??????? HELO
+        socket.write("HELO localhost\r\n"); // Отправка приветственного сообщения "EHLO localhost"
 
         if (socket.waitForBytesWritten()) {
             qDebug() << "EHLO sent";
@@ -132,7 +127,7 @@ void MainWindow::on_pushEmail_clicked()
             qDebug() << "Error sending AUTH LOGIN: " << socket.errorString();
         }
 
-        QString encodedUsername = QByteArray().append(username.toUtf8().toBase64()) + "\r\n";
+        QString encodedUsername = QByteArray().append(username.toUtf8().toBase64()) + "\r\n";//кодировани данных, для безопасной отправки
         QString encodedPassword = QByteArray().append(password.toUtf8().toBase64()) + "\r\n";
 
         socket.write(encodedUsername.toUtf8());
@@ -144,7 +139,7 @@ void MainWindow::on_pushEmail_clicked()
             qDebug() << "Error sending username and password: " << socket.errorString();
         }
 
-        QString mailFromCommand = "MAIL FROM: <" + fromAddress + ">\r\n";
+        QString mailFromCommand = "MAIL FROM: <" + fromAddress + ">\r\n";       //отправка данных письма
         socket.write(mailFromCommand.toUtf8());
 
         if (socket.waitForBytesWritten()) {
@@ -209,10 +204,7 @@ void MainWindow::on_pushEmail_clicked()
 
 
 }
-
-
-
-
+//открытие стандартного офисного клиента с предзаполненными данными
 void MainWindow::on_pushButtonOpen_clicked()
 {
     QString subject = "Результаты обследования и назначения";
@@ -223,7 +215,7 @@ void MainWindow::on_pushButtonOpen_clicked()
     QDesktopServices::openUrl(QUrl(mailtoLink));
 }
 
-
+//нажатие на кнопку обновить данные об опросе
 void MainWindow::on_pushButtonF5_clicked()
 {
 
@@ -249,7 +241,7 @@ void MainWindow::on_pushButtonF5_clicked()
     ui->tableWidgetDiagnoz->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
-
+//нажатие на кнопку для того, чтобы открылось окно опросника
 void MainWindow::on_pushButton_clicked()
 {
     windowWithTest = new testForClient(this);
@@ -257,6 +249,7 @@ void MainWindow::on_pushButton_clicked()
     connect(&(*windowWithTest), &testForClient::VectorSaved, this, &MainWindow::VectorDataSaved);
 }
 
+//функция отвечаюзая за построение графика настроения
 void MainWindow::createGraphic()
 {
     matrix.clear();
@@ -312,11 +305,13 @@ void MainWindow::createGraphic()
     ui->layoutGraphic->addWidget(chartView);
 }
 
+//вывод обновленного графика при нажатии на клиента
 void MainWindow::on_tablePerson_doubleClicked(const QModelIndex &index)
 {
     if(index.column() != 2) return;
     createGraphic();
 }
+//функция для составление и вывода пустого графика
 void MainWindow::createGrahpicStart()
 {
     matrix.clear();

@@ -1,18 +1,18 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QMainWindow>  //для создания окон и редактирования в ui
 #include <QtWidgets>
 
-#include <QSqlDatabase>
+#include <QSqlDatabase> //для работы с базой данных
 #include <QSqlQuery>
 #include <QSqlTableModel>
 #include <QtSql>
 #include <QDebug>
 
-#include <QTableWidgetItem>
+#include <QTableWidgetItem> //дополнение к виджетам
 
-#include <QtNetwork>
+#include <QtNetwork>        //для работы с инттернет соединением
 #include <QTcpSocket>
 #include <QTextStream>
 #include <QAbstractSocket>
@@ -20,16 +20,17 @@
 #include <QDesktopServices> //для открытия приложения, чтобы в нем отправить письмо
 #include <QUrl>
 
-#include <QDialog>
-#include <QtCharts/QChartView>
+#include <QDialog>          //для диалоговых окон
+
+#include <QtCharts/QChartView>  //для построения графика
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QValueAxis>
 
-#include <QPixmap>
+#include <QPixmap>              //для вывода картинки
 
-#include "testforclient.h"
+#include "testforclient.h"      //для взаимодействия окон
 
-class CustomSqlTableModel : public QSqlTableModel
+class CustomSqlTableModel : public QSqlTableModel       //класс кастомной таблицы для отображения данных из базы данных
 {
 public:
     CustomSqlTableModel(QObject* parent = nullptr, QSqlDatabase db = QSqlDatabase())
@@ -38,7 +39,7 @@ public:
             // Дополнительная инициализация вашей модели
         }
 
-    Qt::ItemFlags flags(const QModelIndex& index) const override
+    Qt::ItemFlags flags(const QModelIndex& index) const override        //добавлен новый метод для того, чтобы запретить при двойном клике редактировать таблицу
     {
         Qt::ItemFlags flags = QSqlTableModel::flags(index);
         return flags & ~Qt::ItemIsEditable;
@@ -58,7 +59,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
+private slots://слоты описанны в cpp файле
     void on_addButton_clicked();
 
     void on_tablePerson_clicked(const QModelIndex &index);
@@ -78,17 +79,18 @@ private slots:
     void on_tablePerson_doubleClicked(const QModelIndex &index);
 
 private:
+    //дополниетельные переменные и методы для взаимодействия окон / работы главного окна
     Ui::MainWindow *ui;
 
      void VectorDataSaved(const std::vector<int> data) {this->rasstroystva_ball = data;}
 
-    QSqlDatabase db;
-    QSqlQuery* query;
-    CustomSqlTableModel *model;
+    QSqlDatabase db;            //база данных
+    QSqlQuery* query;           //таблица базы данных
+    CustomSqlTableModel *model; //модель базы данных
     int row;
 
-    testForClient* windowWithTest;
-    std::vector<int> rasstroystva_ball;
+    testForClient* windowWithTest;  //окно для теста
+    std::vector<int> rasstroystva_ball; //вектор для подсчета диагноза
     std::vector<QString> rasstroystva = {"Депресивное растройство", "Тревожное растройство", "Растройство пищевого поведения", "Растройство адаптации", "Скизофрения",
                                          "Растройство внимания и гепиреактивности", "Растройство сна.", "Наркологическое растройство."};
 

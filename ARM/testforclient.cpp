@@ -15,25 +15,18 @@ testForClient::~testForClient()
     delete ui;
 }
 
-//std::vector<int> testForClient::path_test()
-//{
-//    std::vector<int> answers_balance;
-//    std::pair<int, int> pr;
 
-
-
-//    return answers_balance;
-//}
+//при нажатии на кнопку меняем вопрос
 void testForClient::on_pushAnswer_clicked()
 {
     bool checked = false;
     if(current_question == countQuestions)
     {
-        emit this->VectorSaved(this->answers_balance);
+        emit this->VectorSaved(this->answers_balance);      //когда вопросы закончильсь отправляем данные в главное окно
         close();
     }
     else {
-        if(ui->radioButtonNioigda->isChecked()){
+        if(ui->radioButtonNioigda->isChecked()){            //выполнение тестирования
             this->answers_balance.push_back(0);
             checked = true;
         }

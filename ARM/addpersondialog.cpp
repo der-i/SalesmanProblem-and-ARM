@@ -9,7 +9,7 @@ addPersonDialog::addPersonDialog(QWidget *parent, CustomSqlTableModel *model) :
 {
     ui->setupUi(this);
     this->model = model;
-    QDate currentDate = QDate::currentDate();
+    QDate currentDate = QDate::currentDate();       //создание и предзаполнение окна для записи клиента
     FillComboBox(currentDate);
     ui->lineEdit->setText(currentDate.toString("dd.MM.yyyy"));
 }
@@ -19,11 +19,11 @@ addPersonDialog::~addPersonDialog()
     delete ui;
 }
 
-void addPersonDialog::FillComboBox(QDate date)
+void addPersonDialog::FillComboBox(QDate date)      //заполнение выпадающего списка
 {
-    QStringList blockTimeList = getFreeTimeList(date);
+    QStringList blockTimeList = getFreeTimeList(date);  //получаем список времени записанных клиентов
     QStringList freeTimeList = list_time;
-    for (auto& i : blockTimeList) {
+    for (auto& i : blockTimeList) {         //обрабатываем так, чтобы получить список не записанных клиентов
         auto it = std::find(freeTimeList.begin(), freeTimeList.end(), i);
         if(it != freeTimeList.end())
             freeTimeList.erase(it);
@@ -34,8 +34,8 @@ void addPersonDialog::FillComboBox(QDate date)
     }
 }
 
-QStringList addPersonDialog::getFreeTimeList(QDate date)
-{
+QStringList addPersonDialog::getFreeTimeList(QDate date)    //функция для заполнения использованого времени.
+{                                                           //выполняется sql запрос
     QStringList freeTimeList;
 
     QString queryStr = "SELECT Время FROM Client WHERE Дата = '" + date.toString("dd.MM.yyyy") + "'";
@@ -53,35 +53,26 @@ QStringList addPersonDialog::getFreeTimeList(QDate date)
     }
     return freeTimeList;
 }
-
-
-//// Использование делегата для QComboBox
-//QComboBox* comboBox = new QComboBox(this);
-//comboBox->setItemDelegate(new DateComboBoxDelegate(comboBox));
-
-//// Пример добавления даты в QComboBox
-//QDate date = QDate::currentDate();
-//comboBox->addItem(date.toString("dd.MM.yyyy"), date);
-
+//при выборе даты в календаре
 void addPersonDialog::on_calendarWidget_selectionChanged()
 {
-    FillComboBox(ui->calendarWidget->selectedDate());
-    ui->lineEdit->setText(ui->calendarWidget->selectedDate().toString("dd.MM.yyyy"));
+    FillComboBox(ui->calendarWidget->selectedDate());       //заполняем новым временем выпадающий список
+    ui->lineEdit->setText(ui->calendarWidget->selectedDate().toString("dd.MM.yyyy"));   //выполняем установку даты
 }
 
-
+//нажатие на кнопку сохранить
 void addPersonDialog::on_saveChangeButton_clicked()
 {
-    QString date = ui->lineEdit->text();
+    QString date = ui->lineEdit->text();                    //получение данных
     QString time = ui->comboBoxTime->currentText();
     QString name = ui->lineEditName->text();
-    if(date == "")
+    if(date == "")                                          //проверки, чтобы было все заполнено
         QMessageBox::information(nullptr, "Внимание", "Выберите дату на календаре");
     if(time == "")
         QMessageBox::information(nullptr, "Внимание", "Выберите время из выпадающего списка");
     if(name == "")
         QMessageBox::information(nullptr, "Внимание", "Введите имя пациента для записи.");
-    if(date != "" && name != "" && time != "") {
+    if(date != "" && name != "" && time != "") {    //добавление в базу данных новой записи
         QSqlQuery query;
         query.prepare("INSERT INTO Client (Дата, Время, ФИО) VALUES (?, ?, ?)");
         query.addBindValue(date);
@@ -100,7 +91,7 @@ void addPersonDialog::on_saveChangeButton_clicked()
 
 }
 
-
+//если не сохраняем клиента, то выход
 void addPersonDialog::on_unsaveChangeButton_clicked()
 {
     reject();
