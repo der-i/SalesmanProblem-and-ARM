@@ -5,7 +5,7 @@
 - Отчет по задаче Комивояжера: [Граф](/reports/Graph.MD)
 
 ## Видео отчет
-Ссылка на YouTube: https://youtu.be/jV-2TeJ0yfI
+Ссылка на YouTube: https://youtu.be/yMU_4ZuSATE
 
 ## Разработчики
 Разработал студент ПНИПУ гр. РИС-22-1б Деревнин Илья 
